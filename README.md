@@ -32,13 +32,13 @@ You can navigate to the following pages:
 There is two profile that you cna use: 
 
 ```
-##### Tony Stark
+Tony Stark
 Email : tony@stark.com  
 Password : password123  
 ```
 
 ```
-##### Steve Rogers
+Steve Rogers
 Email : steve@rogers.com  
 Password : password456  
 ```
