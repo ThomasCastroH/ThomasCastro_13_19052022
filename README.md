@@ -13,7 +13,7 @@
 
 #### Backend
 
-Refere to the Bank API backend.
+Refere to the Bank API backend.  
 https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API
 
 #### Web application
@@ -31,10 +31,14 @@ You can navigate to the following pages:
 
 There is two profile that you cna use: 
 
+```
 ##### Tony Stark
 Email : tony@stark.com  
 Password : password123  
+```
 
+```
 ##### Steve Rogers
 Email : steve@rogers.com  
 Password : password456  
+```
