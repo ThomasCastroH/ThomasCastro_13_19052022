@@ -22,9 +22,9 @@ function Header () {
               {
                 loggedIn ?
                 (
-                  <div>
+                  <div className="main-nav-links">
                     <Link className="main-nav-item" to="/profile"> <FaUserCircle className="header-signin-logo"/> {user.firstName} </Link>
-                    <Link className="main-nav-item" to="/" onClick={dispatch(logOut)}> Sign Out </Link>
+                    <Link className="main-nav-item" to="/" onClick={dispatch(logOut)}> Sign out </Link>
                   </div>
                 )
                 :

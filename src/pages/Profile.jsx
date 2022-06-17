@@ -47,7 +47,7 @@ function Profile () {
 
     return (
         <main className="main bg-dark">
-            <div className="header">
+            <div className="profile-header">
                 <h1>
                 Welcome back
                 <br />
@@ -55,8 +55,8 @@ function Profile () {
                 </h1>
 
                 { visible ?
-                    <div>
-                        <div>
+                    <div className='change-data'>
+                        <div className='change-data-input'>
                             <input 
                             type="text" 
                             id="firstName" 
@@ -74,9 +74,9 @@ function Profile () {
                             onChange={handleChange}
                             />
                         </div>
-                        <div>
-                        <button onClick={handleSubmit}>Save</button>
-                        <button onClick={() => setVisible(false)}>Cancel</button>
+                        <div className='change-data-button'>
+                            <button className='edit-button' onClick={handleSubmit}>Save</button>
+                            <button className='edit-button' onClick={() => setVisible(false)}>Cancel</button>
                         </div>
                     </div>
                 :
