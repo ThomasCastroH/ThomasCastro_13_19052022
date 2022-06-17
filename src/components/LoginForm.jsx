@@ -2,7 +2,7 @@ import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { logIn } from "../redux/userSlice";
-import { logInUser } from "../redux/serviceAPI";
+import { logInUser } from "../redux/service";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 
@@ -13,9 +13,10 @@ function LoginForm () {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
-        rememberMe: JSON.parse(localStorage.getItem("remember")) || false
+        rememberMe: false
     });
 
+    console.log("formData");
     console.log(formData);
 
     function handleChange(event) {
@@ -67,7 +68,6 @@ function LoginForm () {
                 type="password"
                 id="password"
                 name='password'
-                required
                 onChange={handleChange}
                 />
             </div>

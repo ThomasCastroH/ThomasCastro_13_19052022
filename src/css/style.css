@@ -276,6 +276,28 @@ html {
   color: #fff;
 }
 
+.error-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.error-number {
+  font-size: 20rem;
+}
+
+.error-text {
+  font-size: 3rem;
+  color: #0e7a53;
+}
+
+.error-redirect {
+  font-size: 1.5rem;
+  color: #0e7a53;
+  margin-bottom: 50px;
+  text-decoration: underline;
+}
+
 @media (min-width: 720px) {
   .account {
     flex-direction: row;

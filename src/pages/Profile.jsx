@@ -1,17 +1,89 @@
-import React from "react";
+import React from 'react';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, updateInfo } from "../redux/userSlice";
+import { getUserInfo, updateUserInfo} from "../redux/service";
 
 function Profile () {
+
+    const [inputData, setInputData] = useState({
+        firstName: "",
+        lastName: "",
+    });
+
+    const [visible, setVisible] = useState(false);
+
+    let dispatch = useDispatch();
+    let token = useSelector((state) => state.user.token);
+    useEffect(() => {
+        const getUserProfile = async () => {
+            await dispatch(getUserInfo(token))
+            .then(data => {
+                dispatch(setUser(data))
+            })
+            .catch(err => console.log("error", err))
+        }
+        getUserProfile();
+    }, [dispatch, token]);
+
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+        setInputData(prevInputData => ({
+            ...prevInputData,
+            [name]: value
+        }))
+    }
+
+    function handleSubmit (e) {
+        e.preventDefault();
+        updateUserInfo(inputData.firstName, inputData.lastName, token)
+        dispatch(getUserInfo(token))
+        .then(data => dispatch(updateInfo(data)))
+        .catch(err => console.log("error", err))
+        setVisible(false);
+    }
+
+    let user = useSelector((state) => state.user.currentUser);
+
     return (
         <main className="main bg-dark">
             <div className="header">
                 <h1>
                 Welcome back
                 <br />
-                Placeholder!
+                {user ? user.firstName : "John"} {user ? user.lastName : "Doe"}
                 </h1>
-                <button className="edit-button">
-                Edit Name
-                </button>
+
+                { visible ?
+                    <div>
+                        <div>
+                            <input 
+                            type="text" 
+                            id="firstName" 
+                            name='firstName'
+                            value={inputData.firstName}
+                            placeholder="First Name"
+                            onChange={handleChange}
+                            />
+                            <input 
+                            type="text" 
+                            id="lastName" 
+                            name='lastName'
+                            value={inputData.lastName}
+                            placeholder= "Last Name"
+                            onChange={handleChange}
+                            />
+                        </div>
+                        <div>
+                        <button onClick={handleSubmit}>Save</button>
+                        <button onClick={() => setVisible(false)}>Cancel</button>
+                        </div>
+                    </div>
+                :
+                    <button className="edit-button" onClick={() => setVisible(true)}>
+                    Edit Name
+                    </button>
+                }
             </div>
             <h2 className="sr-only">Accounts</h2>
             <section className="account">

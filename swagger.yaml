@@ -1,166 +1,188 @@
 swagger: '2.0'
 info:
-  title: Bank Argent API documentation
-  description: Contains all available API endpoints in this codebase
-  version: '1.0.0'
-  termsOfService: 'http://swagger.io/terms/'
+  description: Contains proposed API endpoints for client transactions
+  version: 1.0.0
+  title: Bank Argent APi documentation
+  termsOfService: http://swagger.io/terms/
 host: localhost:3001
-basePath: /api/v1
+basePath: /api/v2
 schemes:
+  - https
   - http
 paths:
-  /user/login:
-    post:
+  /user/profile/{accountId}/transactions:
+    get:
       tags:
         - User Module
-      summary: Login
-      description: API for Login
-      parameters:
-        - in: body
-          name: body
-          description: Login Payload
-          required: true
-          schema:
-            $ref: '#/definitions/Login'
+      summary: Access a specific account
+      description: API to access specific account
+      operationId: accessAccount
       produces:
         - application/json
-      responses:
-        '200':
-          description: Login Successfully
-          schema:
-            $ref: '#/definitions/LoginResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/signup:
-    post:
-      tags:
-        - User Module
-      summary: Signup
-      description: API for Signup
       parameters:
-        - in: body
-          name: body
-          description: Signup Payload
+        - name: accountId
+          in: path
           required: true
-          schema:
-            $ref: '#/definitions/User'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Signup Successfully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/profile:
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Profile API
-      description: API for fetching a user profile
-      parameters:
+          description: Id linked to the selected account
+          type: string
         - in: header
           name: Authorization
-          description: Attach Bearer JWT token
           required: true
-      produces:
-        - application/json
+          description: Attach Bearer JWT token
+          type: string
       responses:
         '200':
-          description: User profile retrieved successully
+          description: Account details retrieved
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/account_details'
         '400':
-          description: Invalid Fields
+          description: Invalid fields
         '500':
           description: Internal Server Error
-    put:
       security:
         - Bearer: []
+  /user/profile/{accountId}/transactions/{transactionId}:
+    get:
       tags:
         - User Module
-      summary: User Profile API
-      description: API for updating a user profile
-      parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-        - in: body
-          name: body
-          description: Update user profile attributes
-          required: true
-          schema:
-            $ref: '#/definitions/UserProfile'
+      summary: Access a specific account transactions
+      description: API to access specific account transactions
+      operationId: accessAccountTransactions
       produces:
         - application/json
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          description: Id linked to the selected account
+          type: string
+        - in: header
+          name: Authorization
+          required: true
+          description: Attach Bearer JWT token
+          type: string
+        - in: path
+          name: transactionId
+          required: true
+          description: Id attached to the specific transaction
+          type: string
       responses:
         '200':
-          description: User profile retrieved successully
+          description: Transaction details retrieved
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/account_transaction_details'
         '400':
-          description: Invalid Fields
+          description: Invalid fields
         '500':
           description: Internal Server Error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - User Module
+      summary: Update a specific account transactions
+      description: API to update specific account transactions
+      operationId: updateAccountTransaction
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          description: Id linked to the selected account
+          type: string
+        - in: header
+          name: Authorization
+          required: true
+          description: Attach Bearer JWT token
+          type: string
+        - in: path
+          name: transactionId
+          required: true
+          description: Id attached to the specific transaction
+          type: string
+      responses:
+        '200':
+          description: Transaction details updated
+          schema:
+            $ref: '#/definitions/account_transaction_update'
+        '400':
+          description: Invalid fields
+        '500':
+          description: Internal Server Error
+      security:
+        - Bearer: []
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
 definitions:
-  User:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-      firstName:
-        type: string
-        description: user first name
-      lastName:
-        type: string
-        description: user last name
-  Login:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-  ApiResponse:
+  account_details:
     type: object
     properties:
       status:
         type: integer
       message:
         type: string
+        example: Account details retrieved
       body:
         type: object
+        items: {}
+  account_transaction_details:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+        example: Transaction details retrieved
+      body:
+        type: array
+        items:
+          $ref: '#/definitions/transaction_details'
+  account_transaction_update:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+        example: Transaction details updated successfully
+      body:
+        type: array
+        items:
+          $ref: '#/definitions/transaction_update'
+  transaction_details:
+    type: object
+    properties:
+      id:
+        type: string
+      transaction:
+        type: object
         properties:
-          id:
+          date:
             type: string
-          email:
+            description: Transaction date
+          description:
             type: string
-  LoginResponse:
+            description: Transaction description
+          amount:
+            type: number
+            description: Transaction amount
+          balance:
+            type: number
+            description: Current account balance
+  transaction_update:
     type: object
     properties:
-      token:
+      transactionType:
         type: string
-  UserProfile:
-    type: object
-    properties:
-      firstName:
+        example: Electronic
+      category:
         type: string
-      lastName:
+        example: Food
+      notes:
         type: string
