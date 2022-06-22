@@ -163,6 +163,12 @@ definitions:
       transaction:
         type: object
         properties:
+          transactionType:
+            type: string
+            description: Transaction type
+          category:
+            type: string
+            description: Transaction category
           date:
             type: string
             description: Transaction date
@@ -175,6 +181,9 @@ definitions:
           balance:
             type: number
             description: Current account balance
+          note:
+            type: string
+            description: Transaction notes
   transaction_update:
     type: object
     properties:
@@ -186,3 +195,4 @@ definitions:
         example: Food
       notes:
         type: string
+        example: Transaction made at this restaurant

@@ -1,12 +1,12 @@
 const BASE_URL = "http://localhost:3001/api/v1"
 
 /**
- * API call to get login token
+ * Call the API to log in the user and get the authorization token
  * @param {String} login 
  * @param {String} password 
  * @returns {Object}
  */
-export const logInUser = (login, password) => {
+export function logInUser(login, password) {
     return async() => {
         try {
             const res = await fetch(`${BASE_URL}/user/login`, {
@@ -24,7 +24,6 @@ export const logInUser = (login, password) => {
             const token = data.body.token
 
             return token
-
         } catch(err) {
             console.error("err", err)
         }
@@ -32,11 +31,11 @@ export const logInUser = (login, password) => {
 }   
 
 /**
- * API post call to get user information
+ * Call the API and chech the authorization token to get the user's info
  * @param {String} token 
  * @returns {Object}
  */
- export const getUserInfo = (token) => {  
+ export function getUserInfo(token) {  
     return async () => {
         try{
             const res = await fetch(`${BASE_URL}/user/profile`, {
@@ -53,7 +52,6 @@ export const logInUser = (login, password) => {
             const lastName = body.lastName
 
             return {email, firstName,lastName}
-
         } catch (err) {
             console.log('err',err)
         }
@@ -61,12 +59,12 @@ export const logInUser = (login, password) => {
 }
 
 /**
- * API put call to update user information
+ * Call the API and check the authorization token to change user firstname and lastname
  * @param {String} firstName 
  * @param {String} lastName 
  * @param {String} token 
  */
- export const updateUserInfo = (firstName, lastName, token) => {
+ export function updateUserInfo(firstName, lastName, token) {
     fetch(`${BASE_URL}/user/profile`, {
         method: "PUT",
         headers: {
@@ -78,7 +76,7 @@ export const logInUser = (login, password) => {
     }).then( async (res) => {
         if(res.ok) {
             let jsonRes =  await res.json()
-            console.log("updated!", jsonRes)
+            console.log("user profile is up to date", jsonRes)
 
             return res
         }
