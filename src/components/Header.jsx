@@ -9,10 +9,6 @@ function Header () {
   let loggedIn = useSelector((state) => state.user.loggedIn)
   let user = useSelector((state) => state.user.currentUser)
   let dispatch = useDispatch()
-  console.log("user");
-  console.log(user);
-  console.log("is logged ?");
-  console.log(loggedIn);
 
   return (
     <header className="header">

@@ -26,7 +26,6 @@ export const userSlice = createSlice({
             state.currentUser = {}
             state.loggedIn = false
             state.token = null
-            localStorage.clear()
         }
 
     }
@@ -35,5 +34,3 @@ export const userSlice = createSlice({
 export const {logIn, setUser, updateInfo, logOut} = userSlice.actions
 
 export default userSlice.reducer
-
-export const userDetails = state => state.currentUser

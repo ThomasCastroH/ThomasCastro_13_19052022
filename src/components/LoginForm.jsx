@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { logIn } from "../redux/userSlice";
 import { logInUser } from "../redux/service";
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function LoginForm () {
 
@@ -27,18 +27,13 @@ function LoginForm () {
         }))
     }
 
-    useEffect(() => {
-        localStorage.setItem("remember", formData.rememberMe)
-    }, [formData.rememberMe])
-
     const navigate = useNavigate();
     let username = formData.username;
     let password = formData.password;
-    let rememberMe = formData.rememberMe;
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        dispatch(logInUser(username, password, rememberMe))
+        dispatch(logInUser(username, password))
         .then(data => {
             dispatch(logIn(data));
             if (data) {

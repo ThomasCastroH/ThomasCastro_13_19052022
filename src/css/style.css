@@ -133,7 +133,6 @@ html {
 .features {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
 }
 
 @media (min-width: 920px) {
