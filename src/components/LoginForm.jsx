@@ -16,9 +16,6 @@ function LoginForm () {
         rememberMe: false
     });
 
-    console.log("formData");
-    console.log(formData);
-
     function handleChange(event) {
         const {name, value, type, checked} = event.target
         setFormData(prevFormeData => ({
